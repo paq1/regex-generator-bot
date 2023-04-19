@@ -988,7 +988,8 @@ dependencies = [
 [[package]]
 name = "regex-generator"
 version = "0.1.0"
-source = "git+https://github.com/Cameouf/regex-generator-lib.git#93bc9c37bf93f3aa59b877990dbac6f7f07f4111"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c80b40fd4f3caad5ce7e31ecb638e91ec127098d52d2a074023d9b77ee4498b9"
 dependencies = [
  "rand",
  "regex",
