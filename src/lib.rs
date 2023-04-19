@@ -7,18 +7,24 @@ use serenity::model::channel::Message;
 use serenity::prelude::*;
 
 use crate::bot::commands_discord::generate_regex_command::generate_regex_command;
+use crate::bot::commands_discord::generate_regex_sequence_command::generate_regex_sequence_command;
 
 mod core;
 mod bot;
 mod models;
 
 #[group]
-#[commands(reg_generate)]
+#[commands(reg_generate, reg_generate_seq)]
 struct General;
 
 #[command]
 async fn reg_generate(ctx: &Context, msg: &Message) -> CommandResult {
     generate_regex_command(ctx, msg).await
+}
+
+#[command]
+async fn reg_generate_seq(ctx: &Context, msg: &Message) -> CommandResult {
+    generate_regex_sequence_command(ctx, msg).await
 }
 
 struct Handler;
