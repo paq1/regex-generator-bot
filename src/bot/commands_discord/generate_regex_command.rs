@@ -6,17 +6,19 @@ use serenity::prelude::Context;
 use crate::bot::services::message_service::reply_standard;
 
 pub async fn generate_regex_command(ctx: &Context, msg: &Message) -> CommandResult {
+    let result_of_generate = msg.content
+        .split_once(" ")
+        .map(|(_, content)| {
+            let regex = RegexGenerator::full_regex(content, None);
+            Ok(regex.to_string())
+        })
+        .unwrap_or(Err("message vide"));
 
-    let words = msg.content
-        .split(" ")
-        .into_iter()
-        // .map(|elem| elem.to_string())
-        .filter(|elem| elem.trim() != "")
-        .map(|e| e.to_string())
-        .collect::<Vec<_>>();
+    let message = result_of_generate
+        .unwrap_or_else(|err| err.to_string());
 
-    let regex = RegexGenerator::full_regex(words.get(1).unwrap_or(&" ".to_string()).as_str(), None);
+    reply_standard(message.as_str(), ctx, msg)
+        .await?;
 
-    reply_standard(regex.as_str(), ctx, msg).await?;
     Ok(())
 }
